@@ -4,10 +4,10 @@ import json
 import pymysql
 from flask_cors import CORS
 
-app = Flask(__name__,template_folder="templates",static_folder="static",static_url_path="/backend/static")
+app = Flask(__name__,template_folder="../frontend/build",static_folder="../frontend/build",static_url_path="")
 app.config["JSON_AS_ASCII"] = False
 CORS(app)
-db = pymysql.connect(host='localhost',user='root',database='mydb1',passwd='Gly200111202428',port=3306)
+db = pymysql.connect(host='localhost',user='root',database='industrial_map',passwd='123',port=3306)
 
 @app.route('/', methods=['GET','POST'])
 def index():
@@ -15,8 +15,6 @@ def index():
 
 @app.route('/register', methods=['GET','POST'])
 def register():
-    if request.method == 'GET' :
-        return render_template('register.html')
     if request.method == 'POST':
         data = json.loads(request.get_data(as_text=True))
         cursor = db.cursor()
@@ -38,8 +36,6 @@ def register():
 
 @app.route('/login', methods=['GET','POST'])
 def login():
-    if request.method == 'GET':
-        return render_template('login.html')
     if request.method == 'POST':
         data = json.loads(request.get_data(as_text=True))
         cursor = db.cursor()
@@ -70,8 +66,6 @@ def login():
 
 @app.route('/imap', methods=['GET','POST'])
 def click():
-    if request.method == 'GET':
-        return render_template("map.html")
     if request.method == 'POST':
         data = json.loads(request.get_data(as_text=True))
         cursor = db.cursor()
